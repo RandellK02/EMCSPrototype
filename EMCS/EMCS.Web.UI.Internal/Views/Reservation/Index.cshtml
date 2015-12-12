@@ -1,0 +1,105 @@
+﻿@model IEnumerable<EMCS.Data.DataModel.Reservation>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.StartedOn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndedOn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ReservationNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ReservedForID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CheckedOutOn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CheckedInOn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ExtensionEndsOn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CheckedOutByID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CheckedInByID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PickedUpByID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ReturnedByID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Asset.SerialNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ReservationStatusSVT.Description)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.StartedOn)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EndedOn)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ReservationNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ReservedForID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CheckedOutOn)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CheckedInOn)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ExtensionEndsOn)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CheckedOutByID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CheckedInByID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PickedUpByID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ReturnedByID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Asset.SerialNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ReservationStatusSVT.Description)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

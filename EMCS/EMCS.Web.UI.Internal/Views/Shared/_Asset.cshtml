@@ -1,0 +1,21 @@
+﻿@model EMCS.Data.DataModel.Asset
+
+<tr>
+    <td>
+        @Html.DisplayFor( modelItem => Model.AssetCategory.Name )
+    </td>
+    <td>
+        @Html.DisplayFor( modelItem => Model.AssetStatusSVT.Name )
+    </td>
+    <td>
+        @Html.DisplayFor( modelItem => Model.Brand.Name )
+    </td>
+    <td>
+        @Html.DisplayFor( modelItem => Model.Model.Name )
+    </td>
+    <td>
+        @Html.ActionLink( "Edit", "Edit", new { id = Model.ID } ) |
+        @Html.ActionLink( "Details", "Details", new { id = Model.ID } ) |
+        @Html.ActionLink( "Delete", "Delete", new { id = Model.ID } )
+    </td>
+</tr>

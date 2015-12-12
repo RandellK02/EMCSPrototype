@@ -1,0 +1,1032 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="EMCSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Asset">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SerialNumber" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CategoryID" Type="int" Nullable="false" />
+          <Property Name="StatusID" Type="int" Nullable="false" />
+          <Property Name="BrandID" Type="int" Nullable="false" />
+          <Property Name="ModelID" Type="int" Nullable="false" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="IsArchived" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AssetCategory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DisplayOrder" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AssetStatusSVT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DisplayOrder" Type="int" Nullable="false" />
+          <Property Name="IsArchived" Type="bit" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="Brand">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="DispalyOrder" Type="int" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="Communication">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Content" Type="varchar(max)" Nullable="false" />
+          <Property Name="IsAlert" Type="bit" Nullable="false" />
+          <Property Name="RecievedOn" Type="datetime" />
+          <Property Name="SentOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Image">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="StorageKey" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="FileName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ImageSizeInKilobytes" Type="int" Nullable="false" />
+          <Property Name="FormatDescription" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="500" />
+          <Property Name="TypeID" Type="int" Nullable="false" />
+          <Property Name="AssetID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ImageType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="Model">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="DisplayOrder" Type="int" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="Note">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Content" Type="varchar(max)" Nullable="false" />
+          <Property Name="IsAlert" Type="bit" />
+          <Property Name="ReservationID" Type="int" Nullable="false" />
+          <Property Name="AssetID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Reservation">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StartedOn" Type="datetime" Nullable="false" />
+          <Property Name="EndedOn" Type="datetime" Nullable="false" />
+          <Property Name="ReservationNumber" Type="int" Nullable="false" />
+          <Property Name="ReservedForID" Type="int" Nullable="false" />
+          <Property Name="CheckedOutOn" Type="datetime" />
+          <Property Name="CheckedInOn" Type="datetime" />
+          <Property Name="ExtensionEndsOn" Type="datetime" />
+          <Property Name="CheckedOutByID" Type="int" />
+          <Property Name="CheckedInByID" Type="int" />
+          <Property Name="PickedUpByID" Type="int" />
+          <Property Name="ReturnedByID" Type="int" />
+          <Property Name="AssetID" Type="int" Nullable="false" />
+          <Property Name="StatusID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ReservationCommunication">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="CommunicationID" Type="int" Nullable="false" />
+          <Property Name="ReservationID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ReservationStatusHistory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="StatusChangedOn" Type="datetime" Nullable="false" />
+          <Property Name="ReservationID" Type="int" Nullable="false" />
+          <Property Name="ReservationStatusID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ReservationStatusSVT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DisplayOrder" Type="int" Nullable="false" />
+          <Property Name="IsArchived" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Specification">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Description" Type="varchar(max)" Nullable="false" />
+          <Property Name="AssetID" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Asset_AssetCategory">
+          <End Role="AssetCategory" Type="Self.AssetCategory" Multiplicity="1" />
+          <End Role="Asset" Type="Self.Asset" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AssetCategory">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Asset">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Asset_AssetStatusSVT">
+          <End Role="AssetStatusSVT" Type="Self.AssetStatusSVT" Multiplicity="1" />
+          <End Role="Asset" Type="Self.Asset" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AssetStatusSVT">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Asset">
+              <PropertyRef Name="StatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Asset_Brand">
+          <End Role="Brand" Type="Self.Brand" Multiplicity="1" />
+          <End Role="Asset" Type="Self.Asset" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Brand">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Asset">
+              <PropertyRef Name="BrandID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Asset_Model">
+          <End Role="Model" Type="Self.Model" Multiplicity="1" />
+          <End Role="Asset" Type="Self.Asset" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Model">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Asset">
+              <PropertyRef Name="ModelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Image_Asset">
+          <End Role="Asset" Type="Self.Asset" Multiplicity="1" />
+          <End Role="Image" Type="Self.Image" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Asset">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Image">
+              <PropertyRef Name="AssetID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Image_ImageType">
+          <End Role="ImageType" Type="Self.ImageType" Multiplicity="1" />
+          <End Role="Image" Type="Self.Image" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ImageType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Image">
+              <PropertyRef Name="TypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Note_Asset">
+          <End Role="Asset" Type="Self.Asset" Multiplicity="1" />
+          <End Role="Note" Type="Self.Note" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Asset">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Note">
+              <PropertyRef Name="AssetID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Note_Reservation">
+          <End Role="Reservation" Type="Self.Reservation" Multiplicity="1" />
+          <End Role="Note" Type="Self.Note" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservation">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Note">
+              <PropertyRef Name="ReservationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reservation_Asset">
+          <End Role="Asset" Type="Self.Asset" Multiplicity="1" />
+          <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Asset">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Reservation">
+              <PropertyRef Name="AssetID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reservation_ReservationStatusSVT">
+          <End Role="ReservationStatusSVT" Type="Self.ReservationStatusSVT" Multiplicity="1" />
+          <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReservationStatusSVT">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Reservation">
+              <PropertyRef Name="StatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReservationCommunication_Communication">
+          <End Role="Communication" Type="Self.Communication" Multiplicity="1" />
+          <End Role="ReservationCommunication" Type="Self.ReservationCommunication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Communication">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ReservationCommunication">
+              <PropertyRef Name="CommunicationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReservationCommunication_Reservation">
+          <End Role="Reservation" Type="Self.Reservation" Multiplicity="1" />
+          <End Role="ReservationCommunication" Type="Self.ReservationCommunication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservation">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ReservationCommunication">
+              <PropertyRef Name="ReservationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReservationStatusHistory_Reservation">
+          <End Role="Reservation" Type="Self.Reservation" Multiplicity="1" />
+          <End Role="ReservationStatusHistory" Type="Self.ReservationStatusHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservation">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ReservationStatusHistory">
+              <PropertyRef Name="ReservationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReservationStatusHistory_ReservationStatusSVT">
+          <End Role="ReservationStatusSVT" Type="Self.ReservationStatusSVT" Multiplicity="1" />
+          <End Role="ReservationStatusHistory" Type="Self.ReservationStatusHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReservationStatusSVT">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ReservationStatusHistory">
+              <PropertyRef Name="ReservationStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Specification_Asset">
+          <End Role="Asset" Type="Self.Asset" Multiplicity="1" />
+          <End Role="Specification" Type="Self.Specification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Asset">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Specification">
+              <PropertyRef Name="AssetID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EMCSModelStoreContainer">
+          <EntitySet Name="Asset" EntityType="Self.Asset" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AssetCategory" EntityType="Self.AssetCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AssetStatusSVT" EntityType="Self.AssetStatusSVT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Brand" EntityType="Self.Brand" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Communication" EntityType="Self.Communication" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Image" EntityType="Self.Image" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ImageType" EntityType="Self.ImageType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Model" EntityType="Self.Model" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Note" EntityType="Self.Note" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reservation" EntityType="Self.Reservation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReservationCommunication" EntityType="Self.ReservationCommunication" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReservationStatusHistory" EntityType="Self.ReservationStatusHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReservationStatusSVT" EntityType="Self.ReservationStatusSVT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Specification" EntityType="Self.Specification" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Asset_AssetCategory" Association="Self.FK_Asset_AssetCategory">
+            <End Role="AssetCategory" EntitySet="AssetCategory" />
+            <End Role="Asset" EntitySet="Asset" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Asset_AssetStatusSVT" Association="Self.FK_Asset_AssetStatusSVT">
+            <End Role="AssetStatusSVT" EntitySet="AssetStatusSVT" />
+            <End Role="Asset" EntitySet="Asset" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Asset_Brand" Association="Self.FK_Asset_Brand">
+            <End Role="Brand" EntitySet="Brand" />
+            <End Role="Asset" EntitySet="Asset" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Asset_Model" Association="Self.FK_Asset_Model">
+            <End Role="Model" EntitySet="Model" />
+            <End Role="Asset" EntitySet="Asset" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Image_Asset" Association="Self.FK_Image_Asset">
+            <End Role="Asset" EntitySet="Asset" />
+            <End Role="Image" EntitySet="Image" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Image_ImageType" Association="Self.FK_Image_ImageType">
+            <End Role="ImageType" EntitySet="ImageType" />
+            <End Role="Image" EntitySet="Image" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Note_Asset" Association="Self.FK_Note_Asset">
+            <End Role="Asset" EntitySet="Asset" />
+            <End Role="Note" EntitySet="Note" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Note_Reservation" Association="Self.FK_Note_Reservation">
+            <End Role="Reservation" EntitySet="Reservation" />
+            <End Role="Note" EntitySet="Note" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reservation_Asset" Association="Self.FK_Reservation_Asset">
+            <End Role="Asset" EntitySet="Asset" />
+            <End Role="Reservation" EntitySet="Reservation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reservation_ReservationStatusSVT" Association="Self.FK_Reservation_ReservationStatusSVT">
+            <End Role="ReservationStatusSVT" EntitySet="ReservationStatusSVT" />
+            <End Role="Reservation" EntitySet="Reservation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReservationCommunication_Communication" Association="Self.FK_ReservationCommunication_Communication">
+            <End Role="Communication" EntitySet="Communication" />
+            <End Role="ReservationCommunication" EntitySet="ReservationCommunication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReservationCommunication_Reservation" Association="Self.FK_ReservationCommunication_Reservation">
+            <End Role="Reservation" EntitySet="Reservation" />
+            <End Role="ReservationCommunication" EntitySet="ReservationCommunication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReservationStatusHistory_Reservation" Association="Self.FK_ReservationStatusHistory_Reservation">
+            <End Role="Reservation" EntitySet="Reservation" />
+            <End Role="ReservationStatusHistory" EntitySet="ReservationStatusHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReservationStatusHistory_ReservationStatusSVT" Association="Self.FK_ReservationStatusHistory_ReservationStatusSVT">
+            <End Role="ReservationStatusSVT" EntitySet="ReservationStatusSVT" />
+            <End Role="ReservationStatusHistory" EntitySet="ReservationStatusHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Specification_Asset" Association="Self.FK_Specification_Asset">
+            <End Role="Asset" EntitySet="Asset" />
+            <End Role="Specification" EntitySet="Specification" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EMCSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Asset">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SerialNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CategoryID" Type="Int32" Nullable="false" />
+          <Property Name="StatusID" Type="Int32" Nullable="false" />
+          <Property Name="BrandID" Type="Int32" Nullable="false" />
+          <Property Name="ModelID" Type="Int32" Nullable="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsArchived" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="AssetCategory" Relationship="Self.FK_Asset_AssetCategory" FromRole="Asset" ToRole="AssetCategory" />
+          <NavigationProperty Name="AssetStatusSVT" Relationship="Self.FK_Asset_AssetStatusSVT" FromRole="Asset" ToRole="AssetStatusSVT" />
+          <NavigationProperty Name="Brand" Relationship="Self.FK_Asset_Brand" FromRole="Asset" ToRole="Brand" />
+          <NavigationProperty Name="Model" Relationship="Self.FK_Asset_Model" FromRole="Asset" ToRole="Model" />
+          <NavigationProperty Name="Images" Relationship="Self.FK_Image_Asset" FromRole="Asset" ToRole="Image" />
+          <NavigationProperty Name="Notes" Relationship="Self.FK_Note_Asset" FromRole="Asset" ToRole="Note" />
+          <NavigationProperty Name="Reservations" Relationship="Self.FK_Reservation_Asset" FromRole="Asset" ToRole="Reservation" />
+          <NavigationProperty Name="Specifications" Relationship="Self.FK_Specification_Asset" FromRole="Asset" ToRole="Specification" />
+        </EntityType>
+        <EntityType Name="AssetCategory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Assets" Relationship="Self.FK_Asset_AssetCategory" FromRole="AssetCategory" ToRole="Asset" />
+        </EntityType>
+        <EntityType Name="AssetStatusSVT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
+          <Property Name="IsArchived" Type="Boolean" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Assets" Relationship="Self.FK_Asset_AssetStatusSVT" FromRole="AssetStatusSVT" ToRole="Asset" />
+        </EntityType>
+        <EntityType Name="Brand">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DispalyOrder" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Assets" Relationship="Self.FK_Asset_Brand" FromRole="Brand" ToRole="Asset" />
+        </EntityType>
+        <EntityType Name="Communication">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IsAlert" Type="Boolean" Nullable="false" />
+          <Property Name="RecievedOn" Type="DateTime" Precision="3" />
+          <Property Name="SentOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ReservationCommunications" Relationship="Self.FK_ReservationCommunication_Communication" FromRole="Communication" ToRole="ReservationCommunication" />
+        </EntityType>
+        <EntityType Name="Image">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="StorageKey" Type="Guid" Nullable="false" />
+          <Property Name="FileName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ImageSizeInKilobytes" Type="Int32" Nullable="false" />
+          <Property Name="FormatDescription" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="TypeID" Type="Int32" Nullable="false" />
+          <Property Name="AssetID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Asset" Relationship="Self.FK_Image_Asset" FromRole="Image" ToRole="Asset" />
+          <NavigationProperty Name="ImageType" Relationship="Self.FK_Image_ImageType" FromRole="Image" ToRole="ImageType" />
+        </EntityType>
+        <EntityType Name="ImageType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Images" Relationship="Self.FK_Image_ImageType" FromRole="ImageType" ToRole="Image" />
+        </EntityType>
+        <EntityType Name="Model">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Assets" Relationship="Self.FK_Asset_Model" FromRole="Model" ToRole="Asset" />
+        </EntityType>
+        <EntityType Name="Note">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="IsAlert" Type="Boolean" />
+          <Property Name="ReservationID" Type="Int32" Nullable="false" />
+          <Property Name="AssetID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Asset" Relationship="Self.FK_Note_Asset" FromRole="Note" ToRole="Asset" />
+          <NavigationProperty Name="Reservation" Relationship="Self.FK_Note_Reservation" FromRole="Note" ToRole="Reservation" />
+          <Property Name="Content" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Reservation">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StartedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ReservationNumber" Type="Int32" Nullable="false" />
+          <Property Name="ReservedForID" Type="Int32" Nullable="false" />
+          <Property Name="CheckedOutOn" Type="DateTime" Precision="3" />
+          <Property Name="CheckedInOn" Type="DateTime" Precision="3" />
+          <Property Name="ExtensionEndsOn" Type="DateTime" Precision="3" />
+          <Property Name="CheckedOutByID" Type="Int32" />
+          <Property Name="CheckedInByID" Type="Int32" />
+          <Property Name="PickedUpByID" Type="Int32" />
+          <Property Name="ReturnedByID" Type="Int32" />
+          <Property Name="AssetID" Type="Int32" Nullable="false" />
+          <Property Name="StatusID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Asset" Relationship="Self.FK_Reservation_Asset" FromRole="Reservation" ToRole="Asset" />
+          <NavigationProperty Name="Notes" Relationship="Self.FK_Note_Reservation" FromRole="Reservation" ToRole="Note" />
+          <NavigationProperty Name="ReservationStatusSVT" Relationship="Self.FK_Reservation_ReservationStatusSVT" FromRole="Reservation" ToRole="ReservationStatusSVT" />
+          <NavigationProperty Name="ReservationCommunications" Relationship="Self.FK_ReservationCommunication_Reservation" FromRole="Reservation" ToRole="ReservationCommunication" />
+          <NavigationProperty Name="ReservationStatusHistories" Relationship="Self.FK_ReservationStatusHistory_Reservation" FromRole="Reservation" ToRole="ReservationStatusHistory" />
+        </EntityType>
+        <EntityType Name="ReservationCommunication">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="CommunicationID" Type="Int32" Nullable="false" />
+          <Property Name="ReservationID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Communication" Relationship="Self.FK_ReservationCommunication_Communication" FromRole="ReservationCommunication" ToRole="Communication" />
+          <NavigationProperty Name="Reservation" Relationship="Self.FK_ReservationCommunication_Reservation" FromRole="ReservationCommunication" ToRole="Reservation" />
+        </EntityType>
+        <EntityType Name="ReservationStatusHistory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="StatusChangedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ReservationID" Type="Int32" Nullable="false" />
+          <Property Name="ReservationStatusID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Reservation" Relationship="Self.FK_ReservationStatusHistory_Reservation" FromRole="ReservationStatusHistory" ToRole="Reservation" />
+          <NavigationProperty Name="ReservationStatusSVT" Relationship="Self.FK_ReservationStatusHistory_ReservationStatusSVT" FromRole="ReservationStatusHistory" ToRole="ReservationStatusSVT" />
+        </EntityType>
+        <EntityType Name="ReservationStatusSVT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
+          <Property Name="IsArchived" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Reservations" Relationship="Self.FK_Reservation_ReservationStatusSVT" FromRole="ReservationStatusSVT" ToRole="Reservation" />
+          <NavigationProperty Name="ReservationStatusHistories" Relationship="Self.FK_ReservationStatusHistory_ReservationStatusSVT" FromRole="ReservationStatusSVT" ToRole="ReservationStatusHistory" />
+        </EntityType>
+        <EntityType Name="Specification">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AssetID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Asset" Relationship="Self.FK_Specification_Asset" FromRole="Specification" ToRole="Asset" />
+        </EntityType>
+        <Association Name="FK_Asset_AssetCategory">
+          <End Role="AssetCategory" Type="Self.AssetCategory" Multiplicity="1" />
+          <End Role="Asset" Type="Self.Asset" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AssetCategory">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Asset">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Asset_AssetStatusSVT">
+          <End Role="AssetStatusSVT" Type="Self.AssetStatusSVT" Multiplicity="1" />
+          <End Role="Asset" Type="Self.Asset" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AssetStatusSVT">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Asset">
+              <PropertyRef Name="StatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Asset_Brand">
+          <End Role="Brand" Type="Self.Brand" Multiplicity="1" />
+          <End Role="Asset" Type="Self.Asset" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Brand">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Asset">
+              <PropertyRef Name="BrandID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Asset_Model">
+          <End Role="Model" Type="Self.Model" Multiplicity="1" />
+          <End Role="Asset" Type="Self.Asset" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Model">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Asset">
+              <PropertyRef Name="ModelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Image_Asset">
+          <End Role="Asset" Type="Self.Asset" Multiplicity="1" />
+          <End Role="Image" Type="Self.Image" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Asset">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Image">
+              <PropertyRef Name="AssetID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Note_Asset">
+          <End Role="Asset" Type="Self.Asset" Multiplicity="1" />
+          <End Role="Note" Type="Self.Note" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Asset">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Note">
+              <PropertyRef Name="AssetID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reservation_Asset">
+          <End Role="Asset" Type="Self.Asset" Multiplicity="1" />
+          <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Asset">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Reservation">
+              <PropertyRef Name="AssetID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Specification_Asset">
+          <End Role="Asset" Type="Self.Asset" Multiplicity="1" />
+          <End Role="Specification" Type="Self.Specification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Asset">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Specification">
+              <PropertyRef Name="AssetID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReservationCommunication_Communication">
+          <End Role="Communication" Type="Self.Communication" Multiplicity="1" />
+          <End Role="ReservationCommunication" Type="Self.ReservationCommunication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Communication">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ReservationCommunication">
+              <PropertyRef Name="CommunicationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Image_ImageType">
+          <End Role="ImageType" Type="Self.ImageType" Multiplicity="1" />
+          <End Role="Image" Type="Self.Image" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ImageType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Image">
+              <PropertyRef Name="TypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Note_Reservation">
+          <End Role="Reservation" Type="Self.Reservation" Multiplicity="1" />
+          <End Role="Note" Type="Self.Note" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservation">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Note">
+              <PropertyRef Name="ReservationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reservation_ReservationStatusSVT">
+          <End Role="ReservationStatusSVT" Type="Self.ReservationStatusSVT" Multiplicity="1" />
+          <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReservationStatusSVT">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Reservation">
+              <PropertyRef Name="StatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReservationCommunication_Reservation">
+          <End Role="Reservation" Type="Self.Reservation" Multiplicity="1" />
+          <End Role="ReservationCommunication" Type="Self.ReservationCommunication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservation">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ReservationCommunication">
+              <PropertyRef Name="ReservationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReservationStatusHistory_Reservation">
+          <End Role="Reservation" Type="Self.Reservation" Multiplicity="1" />
+          <End Role="ReservationStatusHistory" Type="Self.ReservationStatusHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservation">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ReservationStatusHistory">
+              <PropertyRef Name="ReservationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReservationStatusHistory_ReservationStatusSVT">
+          <End Role="ReservationStatusSVT" Type="Self.ReservationStatusSVT" Multiplicity="1" />
+          <End Role="ReservationStatusHistory" Type="Self.ReservationStatusHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReservationStatusSVT">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ReservationStatusHistory">
+              <PropertyRef Name="ReservationStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EMCSEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Assets" EntityType="Self.Asset" />
+          <EntitySet Name="AssetCategories" EntityType="Self.AssetCategory" />
+          <EntitySet Name="AssetStatusSVTs" EntityType="Self.AssetStatusSVT" />
+          <EntitySet Name="Brands" EntityType="Self.Brand" />
+          <EntitySet Name="Communications" EntityType="Self.Communication" />
+          <EntitySet Name="Images" EntityType="Self.Image" />
+          <EntitySet Name="ImageTypes" EntityType="Self.ImageType" />
+          <EntitySet Name="Models" EntityType="Self.Model" />
+          <EntitySet Name="Notes" EntityType="Self.Note" />
+          <EntitySet Name="Reservations" EntityType="Self.Reservation" />
+          <EntitySet Name="ReservationCommunications" EntityType="Self.ReservationCommunication" />
+          <EntitySet Name="ReservationStatusHistories" EntityType="Self.ReservationStatusHistory" />
+          <EntitySet Name="ReservationStatusSVTs" EntityType="Self.ReservationStatusSVT" />
+          <EntitySet Name="Specifications" EntityType="Self.Specification" />
+          <AssociationSet Name="FK_Asset_AssetCategory" Association="Self.FK_Asset_AssetCategory">
+            <End Role="AssetCategory" EntitySet="AssetCategories" />
+            <End Role="Asset" EntitySet="Assets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Asset_AssetStatusSVT" Association="Self.FK_Asset_AssetStatusSVT">
+            <End Role="AssetStatusSVT" EntitySet="AssetStatusSVTs" />
+            <End Role="Asset" EntitySet="Assets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Asset_Brand" Association="Self.FK_Asset_Brand">
+            <End Role="Brand" EntitySet="Brands" />
+            <End Role="Asset" EntitySet="Assets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Asset_Model" Association="Self.FK_Asset_Model">
+            <End Role="Model" EntitySet="Models" />
+            <End Role="Asset" EntitySet="Assets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Image_Asset" Association="Self.FK_Image_Asset">
+            <End Role="Asset" EntitySet="Assets" />
+            <End Role="Image" EntitySet="Images" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Note_Asset" Association="Self.FK_Note_Asset">
+            <End Role="Asset" EntitySet="Assets" />
+            <End Role="Note" EntitySet="Notes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reservation_Asset" Association="Self.FK_Reservation_Asset">
+            <End Role="Asset" EntitySet="Assets" />
+            <End Role="Reservation" EntitySet="Reservations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Specification_Asset" Association="Self.FK_Specification_Asset">
+            <End Role="Asset" EntitySet="Assets" />
+            <End Role="Specification" EntitySet="Specifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReservationCommunication_Communication" Association="Self.FK_ReservationCommunication_Communication">
+            <End Role="Communication" EntitySet="Communications" />
+            <End Role="ReservationCommunication" EntitySet="ReservationCommunications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Image_ImageType" Association="Self.FK_Image_ImageType">
+            <End Role="ImageType" EntitySet="ImageTypes" />
+            <End Role="Image" EntitySet="Images" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Note_Reservation" Association="Self.FK_Note_Reservation">
+            <End Role="Reservation" EntitySet="Reservations" />
+            <End Role="Note" EntitySet="Notes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reservation_ReservationStatusSVT" Association="Self.FK_Reservation_ReservationStatusSVT">
+            <End Role="ReservationStatusSVT" EntitySet="ReservationStatusSVTs" />
+            <End Role="Reservation" EntitySet="Reservations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReservationCommunication_Reservation" Association="Self.FK_ReservationCommunication_Reservation">
+            <End Role="Reservation" EntitySet="Reservations" />
+            <End Role="ReservationCommunication" EntitySet="ReservationCommunications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReservationStatusHistory_Reservation" Association="Self.FK_ReservationStatusHistory_Reservation">
+            <End Role="Reservation" EntitySet="Reservations" />
+            <End Role="ReservationStatusHistory" EntitySet="ReservationStatusHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReservationStatusHistory_ReservationStatusSVT" Association="Self.FK_ReservationStatusHistory_ReservationStatusSVT">
+            <End Role="ReservationStatusSVT" EntitySet="ReservationStatusSVTs" />
+            <End Role="ReservationStatusHistory" EntitySet="ReservationStatusHistories" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EMCSModelStoreContainer" CdmEntityContainer="EMCSEntities">
+          <EntitySetMapping Name="Assets">
+            <EntityTypeMapping TypeName="EMCSModel.Asset">
+              <MappingFragment StoreEntitySet="Asset">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="SerialNumber" ColumnName="SerialNumber" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+                <ScalarProperty Name="BrandID" ColumnName="BrandID" />
+                <ScalarProperty Name="ModelID" ColumnName="ModelID" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="IsArchived" ColumnName="IsArchived" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AssetCategories">
+            <EntityTypeMapping TypeName="EMCSModel.AssetCategory">
+              <MappingFragment StoreEntitySet="AssetCategory">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AssetStatusSVTs">
+            <EntityTypeMapping TypeName="EMCSModel.AssetStatusSVT">
+              <MappingFragment StoreEntitySet="AssetStatusSVT">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="IsArchived" ColumnName="IsArchived" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Brands">
+            <EntityTypeMapping TypeName="EMCSModel.Brand">
+              <MappingFragment StoreEntitySet="Brand">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DispalyOrder" ColumnName="DispalyOrder" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Communications">
+            <EntityTypeMapping TypeName="EMCSModel.Communication">
+              <MappingFragment StoreEntitySet="Communication">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="IsAlert" ColumnName="IsAlert" />
+                <ScalarProperty Name="RecievedOn" ColumnName="RecievedOn" />
+                <ScalarProperty Name="SentOn" ColumnName="SentOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Images">
+            <EntityTypeMapping TypeName="EMCSModel.Image">
+              <MappingFragment StoreEntitySet="Image">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="StorageKey" ColumnName="StorageKey" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="ImageSizeInKilobytes" ColumnName="ImageSizeInKilobytes" />
+                <ScalarProperty Name="FormatDescription" ColumnName="FormatDescription" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+                <ScalarProperty Name="AssetID" ColumnName="AssetID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ImageTypes">
+            <EntityTypeMapping TypeName="EMCSModel.ImageType">
+              <MappingFragment StoreEntitySet="ImageType">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Models">
+            <EntityTypeMapping TypeName="EMCSModel.Model">
+              <MappingFragment StoreEntitySet="Model">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Notes">
+            <EntityTypeMapping TypeName="EMCSModel.Note">
+              <MappingFragment StoreEntitySet="Note">
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IsAlert" ColumnName="IsAlert" />
+                <ScalarProperty Name="ReservationID" ColumnName="ReservationID" />
+                <ScalarProperty Name="AssetID" ColumnName="AssetID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reservations">
+            <EntityTypeMapping TypeName="EMCSModel.Reservation">
+              <MappingFragment StoreEntitySet="Reservation">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="StartedOn" ColumnName="StartedOn" />
+                <ScalarProperty Name="EndedOn" ColumnName="EndedOn" />
+                <ScalarProperty Name="ReservationNumber" ColumnName="ReservationNumber" />
+                <ScalarProperty Name="ReservedForID" ColumnName="ReservedForID" />
+                <ScalarProperty Name="CheckedOutOn" ColumnName="CheckedOutOn" />
+                <ScalarProperty Name="CheckedInOn" ColumnName="CheckedInOn" />
+                <ScalarProperty Name="ExtensionEndsOn" ColumnName="ExtensionEndsOn" />
+                <ScalarProperty Name="CheckedOutByID" ColumnName="CheckedOutByID" />
+                <ScalarProperty Name="CheckedInByID" ColumnName="CheckedInByID" />
+                <ScalarProperty Name="PickedUpByID" ColumnName="PickedUpByID" />
+                <ScalarProperty Name="ReturnedByID" ColumnName="ReturnedByID" />
+                <ScalarProperty Name="AssetID" ColumnName="AssetID" />
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReservationCommunications">
+            <EntityTypeMapping TypeName="EMCSModel.ReservationCommunication">
+              <MappingFragment StoreEntitySet="ReservationCommunication">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CommunicationID" ColumnName="CommunicationID" />
+                <ScalarProperty Name="ReservationID" ColumnName="ReservationID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReservationStatusHistories">
+            <EntityTypeMapping TypeName="EMCSModel.ReservationStatusHistory">
+              <MappingFragment StoreEntitySet="ReservationStatusHistory">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="StatusChangedOn" ColumnName="StatusChangedOn" />
+                <ScalarProperty Name="ReservationID" ColumnName="ReservationID" />
+                <ScalarProperty Name="ReservationStatusID" ColumnName="ReservationStatusID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReservationStatusSVTs">
+            <EntityTypeMapping TypeName="EMCSModel.ReservationStatusSVT">
+              <MappingFragment StoreEntitySet="ReservationStatusSVT">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="IsArchived" ColumnName="IsArchived" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Specifications">
+            <EntityTypeMapping TypeName="EMCSModel.Specification">
+              <MappingFragment StoreEntitySet="Specification">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="AssetID" ColumnName="AssetID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

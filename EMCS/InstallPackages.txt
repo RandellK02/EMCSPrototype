@@ -1,0 +1,10 @@
+Install-Package Ninject -projectname EMCS.Web.UI.Internal
+Install-Package Ninject.Web.Common -projectname EMCS.Web.UI.Internal
+Install-Package Ninject.MVC3 -projectname EMCS.Web.UI.Internal
+Install-Package Ninject -projectname EMCS.UnitTests
+Install-Package Ninject.Web.Common -projectname EMCS.UnitTests
+Install-Package Ninject.MVC3 -projectname EMCS.UnitTests
+Install-Package Moq -projectname EMCS.Web.UI.Internal
+Install-Package Moq -projectname EMCS.UnitTests
+Install-Package Microsoft.Aspnet.Mvc EMCS.Data
+Install-Package Microsoft.Aspnet.Mvc EMCS.UnitTests

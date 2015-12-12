@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0fdc06e131ba42ffbe2c4462d90b4abd" Name="Diagram1">
+        <EntityTypeShape EntityType="EMCSModel.Asset" Width="1.5" PointX="3" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMCSModel.AssetCategory" Width="1.5" PointX="0.75" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMCSModel.AssetStatusSVT" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMCSModel.Brand" Width="1.5" PointX="0.75" PointY="12" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMCSModel.Communication" Width="2.375" PointX="5.25" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMCSModel.Image" Width="1.5" PointX="5.25" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMCSModel.ImageType" Width="1.5" PointX="3" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMCSModel.Model" Width="1.5" PointX="0.75" PointY="14.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMCSModel.Note" Width="1.5" PointX="8.25" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMCSModel.Reservation" Width="1.5" PointX="5.25" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMCSModel.ReservationCommunication" Width="2.125" PointX="7.5" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMCSModel.ReservationStatusHistory" Width="2.125" PointX="7.5" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMCSModel.ReservationStatusSVT" Width="2" PointX="2.75" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMCSModel.Specification" Width="1.5" PointX="5.25" PointY="21.125" IsExpanded="true" />
+        <AssociationConnector Association="EMCSModel.FK_Asset_AssetCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="EMCSModel.FK_Asset_AssetStatusSVT" ManuallyRouted="false" />
+        <AssociationConnector Association="EMCSModel.FK_Asset_Brand" ManuallyRouted="false" />
+        <AssociationConnector Association="EMCSModel.FK_Asset_Model" ManuallyRouted="false" />
+        <AssociationConnector Association="EMCSModel.FK_Image_Asset" ManuallyRouted="false" />
+        <AssociationConnector Association="EMCSModel.FK_Note_Asset" ManuallyRouted="false" />
+        <AssociationConnector Association="EMCSModel.FK_Reservation_Asset" ManuallyRouted="false" />
+        <AssociationConnector Association="EMCSModel.FK_Specification_Asset" ManuallyRouted="false" />
+        <AssociationConnector Association="EMCSModel.FK_ReservationCommunication_Communication" ManuallyRouted="false" />
+        <AssociationConnector Association="EMCSModel.FK_Image_ImageType" ManuallyRouted="false" />
+        <AssociationConnector Association="EMCSModel.FK_Note_Reservation" ManuallyRouted="false" />
+        <AssociationConnector Association="EMCSModel.FK_Reservation_ReservationStatusSVT" ManuallyRouted="false" />
+        <AssociationConnector Association="EMCSModel.FK_ReservationCommunication_Reservation" ManuallyRouted="false" />
+        <AssociationConnector Association="EMCSModel.FK_ReservationStatusHistory_Reservation" ManuallyRouted="false" />
+        <AssociationConnector Association="EMCSModel.FK_ReservationStatusHistory_ReservationStatusSVT" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

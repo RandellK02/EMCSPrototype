@@ -1,0 +1,74 @@
+﻿@model EMCS.Data.DataModel.Asset
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Asset</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SerialNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SerialNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsArchived)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsArchived)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AssetCategory.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AssetCategory.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AssetStatusSVT.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AssetStatusSVT.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Brand.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Brand.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Model.Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

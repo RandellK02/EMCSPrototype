@@ -1,0 +1,35 @@
+﻿@model IEnumerable<EMCS.Data.DataModel.Asset>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink( "Create New", "Create" )
+</p>
+
+@*Dont use a table for this, not good for partial views.*@
+<table class="table">
+    <tr>
+        <th>
+            Asset Category
+        </th>
+        <th>
+            Asset Status
+        </th>
+        <th>
+            Brand Name
+        </th>
+        <th>
+            Model Name
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach ( var asset in Model )
+    {
+        @Html.Partial( "_Asset", asset )
+    }
+</table>
