@@ -13,10 +13,17 @@ namespace EMCS.Data.Repositories
     public class EMCSRepositoryBase<T> : IEMCSRepositoryBase<T> where T : class
     {
         private EMCSEntities context;
+        private DbSet<T> dbSet;
 
         public EMCSRepositoryBase(EMCSEntities context)
         {
             this.context = context;
+            dbSet = context.Set<T>();
+        }
+
+        public int Count()
+        {
+            return dbSet.Count();
         }
 
         public int Count(Expression<Func<T, T>> predicate)
@@ -26,42 +33,71 @@ namespace EMCS.Data.Repositories
 
         public void Delete(T entity)
         {
-            throw new NotImplementedException();
+            if ( context.Entry( entity ).State == EntityState.Detached )
+            {
+                dbSet.Attach( entity );
+            }
+            dbSet.Remove( entity );
         }
 
-        public IQueryable<T> GetAll()
+        public IEnumerable<T> GetAll()
         {
-            return context.Set<T>();
+            return dbSet.ToList();
         }
 
-        public IQueryable<T> GetAll(params Expression<Func<T, object>>[] includes)
+        public IEnumerable<T> GetAll(params Expression<Func<T, object>>[] includes)
         {
             var query = context.Set<T>();
             return includes
                 .Aggregate(
                     query.AsQueryable(),
                     (current, include) => current.Include( include )
-                );
+                ).ToList();
+        }
+
+        public IEnumerable<T> GetAll(Expression<Func<T, bool>> filter = null,
+                                     Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<T> GetAll(Expression<Func<T, bool>> filter,
+                                     Func<IQueryable<T>, IOrderedQueryable<T>> order,
+                                     params Expression<Func<T, object>>[] includes)
+        {
+            throw new NotImplementedException();
         }
 
         public T GetByID(int id)
         {
-            throw new NotImplementedException();
+            return dbSet.Find( id );
         }
 
         public void Save(T entity)
         {
-            throw new NotImplementedException();
+            context.SaveChanges();
         }
 
-        public IQueryable<T> Search(Expression<Func<T, bool>> predicate)
+        public IEnumerable<T> Search(Expression<Func<T, bool>> filter)
         {
-            return context.Set<T>().Where( predicate );
+            return dbSet.Where( filter ).ToList();
         }
 
-        public IQueryable<T> Search(Expression<Func<T, bool>> predicate, String children)
+        public IEnumerable<T> Search(Expression<Func<T, bool>> filter,
+                                     params Expression<Func<T, object>>[] includes)
         {
-            return context.Set<T>().Include( children ).Where( predicate );
+            var query = context.Set<T>();
+            return (includes
+                .Aggregate(
+                    query.AsQueryable(),
+                    (current, include) => current.Include( include )
+                )).Where( filter ).ToList();
+        }
+
+        public void Update(T entity)
+        {
+            dbSet.Attach( entity );
+            context.Entry( entity ).State = EntityState.Modified;
         }
     }
 }

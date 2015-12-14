@@ -1,4 +1,5 @@
-﻿using EMCS.Data.Abstract;
+﻿using EMCS.BusinessServices.Abstract;
+using EMCS.Data.Abstract;
 using EMCS.Data.DataModel;
 using EMCS.Data.Repositories;
 using System;
@@ -14,12 +15,12 @@ namespace EMCS.Web.UI.Internal.Controllers
 {
     public class AssetController : Controller
     {
+        private IAssetService assetService;
         private EMCSEntities db = new EMCSEntities();
-        private IEMCSRepositoryBase<Asset> repository;
 
-        public AssetController(IEMCSRepositoryBase<Asset> repository)
+        public AssetController(IAssetService assetService)
         {
-            this.repository = repository;
+            this.assetService = assetService;
         }
 
         // GET: Asset/Create
@@ -107,7 +108,7 @@ namespace EMCS.Web.UI.Internal.Controllers
             {
                 return new HttpStatusCodeResult( HttpStatusCode.BadRequest );
             }
-            Asset asset = db.Assets.Find( id );
+            Asset asset = assetService.getByID( (int)id );
             if ( asset == null )
             {
                 return HttpNotFound();
@@ -157,8 +158,7 @@ namespace EMCS.Web.UI.Internal.Controllers
         // GET: Asset
         public ActionResult Index()
         {
-            var assets = repository.GetAll( a => a.AssetCategory, a => a.AssetStatusSVT, a => a.Brand, a => a.Model );
-            return View( assets.ToList() );
+            return View( assetService.getAll() );
         }
 
         protected override void Dispose(bool disposing)

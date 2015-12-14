@@ -9,20 +9,24 @@ namespace EMCS.Data.Abstract
 {
     public interface IEMCSRepositoryBase<T> where T : class
     {
+        int Count();
+
         int Count(Expression<Func<T, T>> predicate);
 
         void Delete(T entity);
 
-        IQueryable<T> GetAll();
+        IEnumerable<T> GetAll();
 
-        IQueryable<T> GetAll(params Expression<Func<T, object>>[] includes);
+        IEnumerable<T> GetAll(params Expression<Func<T, object>>[] includes);
 
         T GetByID(int id);
 
         void Save(T entity);
 
-        IQueryable<T> Search(Expression<Func<T, bool>> predicate);
+        IEnumerable<T> Search(Expression<Func<T, bool>> predicate);
 
-        IQueryable<T> Search(Expression<Func<T, bool>> predicate, String children);
+        IEnumerable<T> Search(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes);
+
+        void Update(T entity);
     }
 }

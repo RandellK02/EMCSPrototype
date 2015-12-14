@@ -1,4 +1,6 @@
-﻿using EMCS.Data.Abstract;
+﻿using EMCS.BusinessServices;
+using EMCS.BusinessServices.Abstract;
+using EMCS.Data.Abstract;
 using EMCS.Data.DataModel;
 using EMCS.Data.Repositories;
 using Moq;
@@ -33,6 +35,7 @@ namespace EMCS.Web.UI.Internal.Infrastructure
         private void AddBindings()
         {
             kernel.Bind( typeof( IEMCSRepositoryBase<> ) ).To( typeof( EMCSRepositoryBase<> ) );
+            kernel.Bind( typeof( IAssetService ) ).To( typeof( AssetService ) );
         }
     }
 }
