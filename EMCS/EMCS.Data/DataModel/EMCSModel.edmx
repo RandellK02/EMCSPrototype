@@ -9,7 +9,8 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Tag" Type="int" Nullable="false" />
           <Property Name="SerialNumber" Type="nvarchar(max)" Nullable="false" />
           <Property Name="CategoryID" Type="int" Nullable="false" />
           <Property Name="StatusID" Type="int" Nullable="false" />
@@ -430,6 +431,7 @@
           <NavigationProperty Name="Notes" Relationship="Self.FK_Note_Asset" FromRole="Asset" ToRole="Note" />
           <NavigationProperty Name="Reservations" Relationship="Self.FK_Reservation_Asset" FromRole="Asset" ToRole="Reservation" />
           <NavigationProperty Name="Specifications" Relationship="Self.FK_Specification_Asset" FromRole="Asset" ToRole="Specification" />
+          <Property Name="Tag" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="AssetCategory">
           <Key>
@@ -850,6 +852,7 @@
           <EntitySetMapping Name="Assets">
             <EntityTypeMapping TypeName="EMCSModel.Asset">
               <MappingFragment StoreEntitySet="Asset">
+                <ScalarProperty Name="Tag" ColumnName="Tag" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="SerialNumber" ColumnName="SerialNumber" />
                 <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />

@@ -38,6 +38,7 @@ namespace EMCS.Data.Repositories
                 dbSet.Attach( entity );
             }
             dbSet.Remove( entity );
+            context.SaveChanges();
         }
 
         public IEnumerable<T> GetAll()
@@ -75,6 +76,7 @@ namespace EMCS.Data.Repositories
 
         public void Save(T entity)
         {
+            dbSet.Add( entity );
             context.SaveChanges();
         }
 
@@ -98,6 +100,7 @@ namespace EMCS.Data.Repositories
         {
             dbSet.Attach( entity );
             context.Entry( entity ).State = EntityState.Modified;
+            context.SaveChanges();
         }
     }
 }

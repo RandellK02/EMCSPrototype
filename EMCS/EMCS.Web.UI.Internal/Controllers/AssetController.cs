@@ -2,6 +2,7 @@
 using EMCS.Data.Abstract;
 using EMCS.Data.DataModel;
 using EMCS.Data.Repositories;
+using EMCS.Web.Mvc.ViewModels.Assets;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -26,11 +27,14 @@ namespace EMCS.Web.UI.Internal.Controllers
         // GET: Asset/Create
         public ActionResult Create()
         {
-            ViewBag.CategoryID = new SelectList( db.AssetCategories, "ID", "Name" );
-            ViewBag.StatusID = new SelectList( db.AssetStatusSVTs, "ID", "Name" );
-            ViewBag.BrandID = new SelectList( db.Brands, "ID", "Name" );
-            ViewBag.ModelID = new SelectList( db.Models, "ID", "Name" );
-            return View();
+            AssetViewModel asset = new AssetViewModel
+            {
+                CategoryList = new SelectList( assetService.getAllCategories(), "ID", "Name" ),
+                StatusList = new SelectList( assetService.getAllStatuses(), "ID", "Name" ),
+                BrandList = new SelectList( assetService.getAllBrands(), "ID", "Name" ),
+                ModelList = new SelectList( assetService.getAllModels(), "ID", "Name" )
+            };
+            return View( asset );
         }
 
         // POST: Asset/Create
@@ -38,20 +42,27 @@ namespace EMCS.Web.UI.Internal.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind( Include = "ID,SerialNumber,CategoryID,StatusID,BrandID,ModelID,PhoneNumber,IsArchived" )] Asset asset)
+        public ActionResult Create([Bind( Include = "ID,Tag,SerialNumber,CategoryID,CategoryList,StatusID,StatusList,BrandID,BrandList,ModelID,ModelList,PhoneNumber,IsArchived" )] AssetViewModel viewModel)
         {
+            Asset asset = new Asset
+            {
+                ID = viewModel.ID,
+                Tag = viewModel.Tag,
+                CategoryID = viewModel.CategoryID,
+                ModelID = viewModel.ModelID,
+                BrandID = viewModel.BrandID,
+                StatusID = viewModel.StatusID,
+                SerialNumber = viewModel.SerialNumber,
+                IsArchived = viewModel.IsArchived,
+                PhoneNumber = viewModel.PhoneNumber
+            };
             if ( ModelState.IsValid )
             {
-                db.Assets.Add( asset );
-                db.SaveChanges();
+                assetService.Save( asset );
                 return RedirectToAction( "Index" );
             }
 
-            ViewBag.CategoryID = new SelectList( db.AssetCategories, "ID", "Description", asset.CategoryID );
-            ViewBag.StatusID = new SelectList( db.AssetStatusSVTs, "ID", "Name", asset.StatusID );
-            ViewBag.BrandID = new SelectList( db.Brands, "ID", "Name", asset.BrandID );
-            ViewBag.ModelID = new SelectList( db.Models, "ID", "Name", asset.ModelID );
-            return View( asset );
+            return View( viewModel );
         }
 
         public ActionResult CreateCategory()
@@ -82,26 +93,38 @@ namespace EMCS.Web.UI.Internal.Controllers
             {
                 return new HttpStatusCodeResult( HttpStatusCode.BadRequest );
             }
-            Asset asset = db.Assets.Find( id );
+
+            Asset asset = assetService.getByID( (int)id );
+            AssetViewModel assetViewModel = new AssetViewModel
+            {
+                ID = asset.ID,
+                Tag = asset.Tag,
+                SerialNumber = asset.SerialNumber,
+                IsArchived = asset.IsArchived,
+                PhoneNumber = asset.PhoneNumber,
+                Brand = asset.Brand.Name,
+                Category = asset.AssetCategory.Name,
+                Model = asset.Model.Name,
+                Status = asset.AssetStatusSVT.Name
+            };
+
             if ( asset == null )
             {
                 return HttpNotFound();
             }
-            return View( asset );
+            return View( assetViewModel );
         }
 
         // POST: Asset/Delete/5
         [HttpPost, ActionName( "Delete" )]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed([Bind( Include = "ID" )]AssetViewModel viewModel)
         {
-            Asset asset = db.Assets.Find( id );
-            db.Assets.Remove( asset );
-            db.SaveChanges();
+            Asset asset = assetService.getByID( viewModel.ID );
+            assetService.delete( asset );
             return RedirectToAction( "Index" );
         }
 
-        // GET: Asset/Details/5
         public ActionResult Details(int? id)
         {
             if ( id == null )
@@ -109,11 +132,25 @@ namespace EMCS.Web.UI.Internal.Controllers
                 return new HttpStatusCodeResult( HttpStatusCode.BadRequest );
             }
             Asset asset = assetService.getByID( (int)id );
+            AssetViewModel assetViewModel = new AssetViewModel
+            {
+                ID = asset.ID,
+                Tag = asset.Tag,
+                PhoneNumber = asset.PhoneNumber,
+                SerialNumber = asset.SerialNumber,
+                IsArchived = asset.IsArchived,
+                Status = asset.AssetStatusSVT.Name,
+                Brand = asset.Brand.Name,
+                Model = asset.Model.Name,
+                Category = asset.AssetCategory.Name
+            };
+
             if ( asset == null )
             {
                 return HttpNotFound();
             }
-            return View( asset );
+
+            return View( assetViewModel );
         }
 
         // GET: Asset/Edit/5
@@ -123,16 +160,31 @@ namespace EMCS.Web.UI.Internal.Controllers
             {
                 return new HttpStatusCodeResult( HttpStatusCode.BadRequest );
             }
-            Asset asset = db.Assets.Find( id );
+
+            Asset asset = assetService.getByID( (int)id );
+            AssetViewModel assetViewModel = new AssetViewModel
+            {
+                ID = asset.ID,
+                Tag = asset.Tag,
+                SerialNumber = asset.SerialNumber,
+                IsArchived = asset.IsArchived,
+                PhoneNumber = asset.PhoneNumber,
+                BrandList = new SelectList( db.Brands, "ID", "Name" ),
+                StatusList = new SelectList( db.AssetStatusSVTs, "ID", "Name" ),
+                ModelList = new SelectList( db.Models, "ID", "Name" ),
+                CategoryList = new SelectList( db.AssetCategories, "ID", "Name" ),
+                CategoryID = asset.CategoryID,
+                ModelID = asset.ModelID,
+                BrandID = asset.BrandID,
+                StatusID = asset.StatusID
+            };
+
             if ( asset == null )
             {
                 return HttpNotFound();
             }
-            ViewBag.CategoryID = new SelectList( db.AssetCategories, "ID", "Name", asset.CategoryID );
-            ViewBag.StatusID = new SelectList( db.AssetStatusSVTs, "ID", "Name", asset.StatusID );
-            ViewBag.BrandID = new SelectList( db.Brands, "ID", "Name", asset.BrandID );
-            ViewBag.ModelID = new SelectList( db.Models, "ID", "Name", asset.ModelID );
-            return View( asset );
+
+            return View( assetViewModel );
         }
 
         // POST: Asset/Edit/5
@@ -140,19 +192,28 @@ namespace EMCS.Web.UI.Internal.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind( Include = "ID,SerialNumber,CategoryID,StatusID,BrandID,ModelID,PhoneNumber,IsArchived" )] Asset asset)
+        public ActionResult Edit([Bind( Include = "ID,Tag,SerialNumber,CategoryID,StatusID,BrandID,ModelID,PhoneNumber,IsArchived" )]AssetViewModel viewModel)
         {
+            Asset asset = new Asset
+            {
+                ID = viewModel.ID,
+                Tag = viewModel.Tag,
+                CategoryID = viewModel.CategoryID,
+                ModelID = viewModel.ModelID,
+                BrandID = viewModel.BrandID,
+                StatusID = viewModel.StatusID,
+                SerialNumber = viewModel.SerialNumber,
+                IsArchived = viewModel.IsArchived,
+                PhoneNumber = viewModel.PhoneNumber
+            };
+
             if ( ModelState.IsValid )
             {
-                db.Entry( asset ).State = EntityState.Modified;
-                db.SaveChanges();
+                assetService.Update( asset );
                 return RedirectToAction( "Index" );
             }
-            ViewBag.CategoryID = new SelectList( db.AssetCategories, "ID", "Description", asset.CategoryID );
-            ViewBag.StatusID = new SelectList( db.AssetStatusSVTs, "ID", "Name", asset.StatusID );
-            ViewBag.BrandID = new SelectList( db.Brands, "ID", "Name", asset.BrandID );
-            ViewBag.ModelID = new SelectList( db.Models, "ID", "Name", asset.ModelID );
-            return View( asset );
+
+            return View( viewModel );
         }
 
         // GET: Asset

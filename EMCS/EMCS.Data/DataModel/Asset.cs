@@ -31,6 +31,7 @@ namespace EMCS.Data.DataModel
         public int ModelID { get; set; }
         public string PhoneNumber { get; set; }
         public bool IsArchived { get; set; }
+        public int Tag { get; set; }
     
         public virtual AssetCategory AssetCategory { get; set; }
         public virtual AssetStatusSVT AssetStatusSVT { get; set; }
